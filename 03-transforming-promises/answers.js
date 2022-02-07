@@ -3,12 +3,15 @@
  * EXERCISE 1
  * 
  * @param {*} promise 
- * @param {*} transformer 
+ * @param {*} transformer
  * @returns {Promise}
  */
 function mapPromise(promise, transformer){
   return new Promise((resolve, reject) => {
-    /* IMPLEMENT ME!! */
+    promise
+      .then((value) => transformer(value))
+      .then((value2) => resolve(value2))
+      .catch(err => reject(err))
   });
 }
 
@@ -21,7 +24,14 @@ function mapPromise(promise, transformer){
  */
 function squarePromise(numberPromise){
   return numberPromise
-    .then(/* IMPLEMENT ME! */);
+    .then(resolution => { 
+      return new Promise((resolve, reject) => {
+        if(isNaN(resolution)) {
+          reject(`Cannot convert '${resolution}' to a number!`);
+        }
+        resolve(resolution * resolution);
+      })  
+    });
 }
 
 /**
@@ -32,7 +42,7 @@ function squarePromise(numberPromise){
  */
 function squarePromiseOrZero(promise){
   return squarePromise(promise)
-    .catch(/* IMPLEMENT ME! */);
+    .catch(() => {return 0});
 }
 
 /**
@@ -42,7 +52,7 @@ function squarePromiseOrZero(promise){
  * @returns {Promise}
  */
 function switcheroo(promise){
-  return promise.then(/* IMPLEMENT ME */);
+  return promise.then(resolution => Promise.reject(resolution), resolution2 => Promise.resolve(resolution2));
 }
 
 /**

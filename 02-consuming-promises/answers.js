@@ -20,11 +20,9 @@ function waitForPromise(promise, action){
  * @param {handler} handler 
  */
 function consumePromise(promise, consumer, handler){
-  promise.then((value) => {
-    return consumer(value);
-  }).catch((err) => {
-    return handler(err);
-  });
+  promise
+    .then((value) => {return consumer(value);})
+    .catch((err) => {return handler(err);});
 }
 
 /**
